@@ -1,9 +1,26 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 
 defineOptions({
   name: "Demo"
 });
+import { useLoadingStore } from "@/store/modules/loading";
+
+const loadingStore = useLoadingStore();
+
+const fetchData = async () => {
+  loadingStore.setLoading(true);
+  try {
+    // 模拟异步操作
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loadingStore.setLoading(false);
+  }
+};
+
+fetchData();
 
 const contentList = reactive([
   "✔ ⚡ Vue3 + Vite5",
@@ -26,7 +43,7 @@ const contentList = reactive([
 
 <template>
   <div class="demo-content px-[12px]">
-    <img
+    <!-- <img
       class="block w-[120px] mx-auto mb-[20px] pt-[30px]"
       alt="Vue logo"
       src="~@/assets/logo_melomini.png"
@@ -53,6 +70,6 @@ const contentList = reactive([
 
     <div class="demo-main">
       <van-cell v-for="(item, idx) in contentList" :key="idx" :title="item" />
-    </div>
+    </div> -->
   </div>
 </template>
