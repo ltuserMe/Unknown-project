@@ -1,6 +1,7 @@
 import {
   createRouter,
   createWebHashHistory,
+  createWebHistory,
   type RouteLocationNormalized
 } from "vue-router";
 import routes from "./routes";
@@ -9,7 +10,7 @@ import NProgress from "@/utils/progress";
 import setPageTitle from "@/utils/set-page-title";
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory("/"),
   routes
 });
 
