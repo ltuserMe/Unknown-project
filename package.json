@@ -1,7 +1,6 @@
 {
   "name": "vue3",
   "version": "0.6.1",
-  "license": "MIT",
   "engines": {
     "node": ">= 18",
     "pnpm": ">= 9"
