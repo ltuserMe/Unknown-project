@@ -31,7 +31,7 @@
         />
       </div>
 
-      <div class="scan-container"></div>
+      <div class="scan-container" />
     </section>
   </div>
 </template>
@@ -49,6 +49,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLoadingStore } from "@/store/modules/loading";
 import { onMounted, ref } from "vue";
+
 // // 引入 ScrollTrigger 插件，用于滚动触发效果
 gsap.registerPlugin(ScrollTrigger);
 
