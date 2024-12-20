@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
   // 环境变量
   const env = loadEnv(mode, root, "");
   return {
-    base: env.VITE_PUBLIC_PATH || "/",
+    base: env.VITE_PUBLIC_PATH || "./",
     plugins: [
       vue(),
       vueJsx(),
@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
         imports: ["vue", "@vueuse/core", "pinia", "vue-router", "vue-i18n"],
         resolvers: [
           // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
-          ElementPlusResolver(),
+          ElementPlusResolver()
           // 自动导入图标组件
           // IconsResolver({})
         ],
@@ -92,6 +92,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
+      assetsPublicPath: "./",
       rollupOptions: {
         output: {
           chunkFileNames: "static/js/[name]-[hash].js",
