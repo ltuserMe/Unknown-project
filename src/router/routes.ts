@@ -3,11 +3,14 @@ import type { RouteRecordRaw } from "vue-router";
 import Demo from "@/views/demo/index.vue";
 
 const routes: Array<RouteRecordRaw> = [
+  //加一个重定向路由
+  { path: "/redirect", component: Layout },
   {
     path: "/",
     name: "root",
     component: Layout,
     redirect: { name: "Demo" },
+
     children: [
       {
         path: "demo",

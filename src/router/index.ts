@@ -10,7 +10,7 @@ import NProgress from "@/utils/progress";
 import setPageTitle from "@/utils/set-page-title";
 
 const router = createRouter({
-  history: createWebHistory("/"),
+  history: createWebHistory(),
   routes
 });
 
