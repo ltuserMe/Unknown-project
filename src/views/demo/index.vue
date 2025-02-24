@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="model"></div>
+    <div class="model" />
     <section class="hero">
       <h1>cocaCola</h1>
       <h2>口渴不需要其它</h2>
@@ -31,7 +31,7 @@
         />
       </div>
 
-      <div class="scan-container"></div>
+      <div class="scan-container" />
     </section>
   </div>
 </template>
@@ -49,12 +49,34 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLoadingStore } from "@/store/modules/loading";
 import { onMounted, ref } from "vue";
+
 // // 引入 ScrollTrigger 插件，用于滚动触发效果
 gsap.registerPlugin(ScrollTrigger);
 
 // 创建一个 Lenis 实例，用于平滑滚动
 const lenis = ref(new Lenis());
+const renderer = new THREE.WebGLRenderer({
+  antialias: true, // 开启抗锯齿
+  alpha: true // 启用透明背景
+});
+// 创建透视相机
+const camera = new THREE.PerspectiveCamera(
+  75, // 视角角度
+  window.innerWidth / window.innerHeight, // 屏幕宽高比
+  0.1, // 最近视距
+  1000 // 最远视距
+);
 
+window.addEventListener("resize", () => {
+  // 更新摄像头
+  camera.aspect = window.innerWidth / window.innerHeight;
+  //   更新摄像机的投影矩阵
+  camera.updateProjectionMatrix();
+  //   更新渲染器
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  //   设置渲染器的像素比
+  renderer.setPixelRatio(window.devicePixelRatio);
+});
 // 初始化函数
 const init = () => {
   // Lenis 监听滚动事件并更新 ScrollTrigger
@@ -62,7 +84,7 @@ const init = () => {
 
   // 添加动画帧更新
   gsap.ticker.add(time => {
-    lenis.value.raf(time * 1000); // 更新滚动时间轴
+    lenis.value.raf(time * 80); // 更新滚动时间轴
   });
 
   // 禁用动画帧的延迟平滑处理
@@ -71,19 +93,7 @@ const init = () => {
   // 创建 Three.js 场景
   const scene = new THREE.Scene();
 
-  // 创建透视相机
-  const camera = new THREE.PerspectiveCamera(
-    75, // 视角角度
-    window.innerWidth / window.innerHeight, // 屏幕宽高比
-    0.1, // 最近视距
-    1000 // 最远视距
-  );
-
   // 创建 WebGL 渲染器
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true, // 开启抗锯齿
-    alpha: true // 启用透明背景
-  });
 
   // 设置渲染器的背景颜色、尺寸和像素比
   renderer.setClearColor(0xffffff, 1);
@@ -132,7 +142,7 @@ const init = () => {
 
   // 加载 glTF 模型
   const loader = new GLTFLoader();
-  loader.load("../../../static/无标题.glb", function (gltf) {
+  loader.load("/test.glb", function (gltf) {
     model = gltf.scene; // 加载后的模型场景
 
     // 遍历模型的每个节点
@@ -185,7 +195,7 @@ const init = () => {
     };
     playInitialAnimation();
 
-    cancelAnimationFrame(basicAnimate); // 卸载组件时取消动画帧
+    // cancelAnimationFrame(basicAnimate); // 取消动画帧
   });
 
   let isFloating = true; // 模型是否处于漂浮状态

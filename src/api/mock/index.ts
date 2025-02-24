@@ -13,6 +13,14 @@ export function getListApi(params?: object): Promise<ListResult> {
     params
   });
 }
+// 获取列表数据的 API 函数
+export const getMsgApi = (params?: object) => {
+  return http.request({
+    url: "/getMsg",
+    method: "get",
+    params
+  });
+};
 
 export function getListApiError(data?: object): Promise<ListResult> {
   return http.request({
