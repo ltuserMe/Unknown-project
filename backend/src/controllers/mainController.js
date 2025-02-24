@@ -1,32 +1,58 @@
 // src/controllers/mainController.js
+const User = require("../mongodb/mongodb");
+
+// 统一响应封装函数
+const sendResponse = (res, statusCode, success, message, result = null) => {
+  res.status(statusCode).json({
+    success,
+    message,
+    ...(result && { result })
+  });
+};
+
 const mainController = {
   getHome: (req, res) => {
-    res.send("Hello, this is the backend server!");
+    sendResponse(res, 200, true, "Hello, this is the backend server!");
   },
   postData: (req, res) => {
     const data = req.body;
     console.log("Received data:", data);
-    res.json({ message: "Data received successfully!" });
+    sendResponse(res, 200, true, "Data received successfully!");
   },
-  // 处理 GET 请求，返回包含 message 的 JSON 数据
-  // app.get('/api/mock/list', (req, res) => {
-  //     res.json({
-  //       code: 200,
-  //       message: '这是点击',
-  //       list: []
-  //     });
-  //   });
-  getMessage: (req, res) => {
-    // console.log("🚀 ~ req:", req);
-    const data = req.body;
-    // console.log("🚀 ~ data:", data)
-    // console.log('Received data:', data);
-    res.json({
-      code: 200,
-      result: {
-        message: "这是点击"
+
+  getMessage: async (req, res) => {
+    // 获取查询参数中的 id
+    const id = req.query.id;
+
+    try {
+      if (!id) {
+        return sendResponse(res, 400, false, "缺少必要的参数 id");
       }
-    });
+      const user = await User.findOne({ id: id });
+
+      // console.log("🚀 ~ getMessage: ~ user:", user);
+      if (!user) {
+        return sendResponse(res, 404, false, "未找到对应的用户");
+      }
+
+      // 如果找到用户，可以返回用户信息
+      sendResponse(res, 200, true, "查询成功", { user });
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+      sendResponse(res, 500, false, "服务器错误");
+    }
+  },
+  addUser: async (req, res) => {
+    const { name, age } = req.body;
+    // const id = 4;
+    try {
+      const update = await User.create({ name, age });
+      
+      sendResponse(res, 200, true, "用户添加成功", update);
+    } catch (error) {
+      console.error("🚀 ~ addUser: ~ error:", error);
+      sendResponse(res, 500, false, "添加用户时出错", error.message);
+    }
   }
 };
 

@@ -6,5 +6,6 @@ const mainController = require('../controllers/mainController');
 router.get('/', mainController.getHome);
 router.post('/data', mainController.postData);
 router.get('/getMsg', mainController.getMessage);
+router.post('/add', mainController.addUser);
 
 module.exports = router;

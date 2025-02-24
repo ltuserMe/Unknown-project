@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getListApi, getListApiError, getMsgApi } from "@/api/mock";
+import { addApi, getListApi, getListApiError, getMsgApi } from "@/api/mock";
 import { reactive } from "vue";
 import { showFailToast, showSuccessToast } from "vant";
 import "vant/es/toast/style";
@@ -9,6 +9,7 @@ import Fa6SolidBaby from "@iconify-icons/fa6-solid/baby";
 import Fa6SolidBasketball from "@iconify-icons/fa6-solid/basketball";
 import Fa6SolidBurger from "@iconify-icons/fa6-solid/burger";
 import Fa6SolidChessKnight from "@iconify-icons/fa6-solid/chess-knight";
+import { M } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 defineOptions({
   name: "Tools"
@@ -17,22 +18,20 @@ defineOptions({
 const showList: string[] = reactive([]);
 
 const handleSuccessReq = async () => {
-  const data = { id: 1 };
-  const { message } = await getMsgApi(data);
-  console.log("🚀 ~ handleSuccessReq ~ message:", message)
-
-  // const { list } = await getListApi();
-  showSuccessToast(message);
-  // showList.push(...list);
+  const data = { id: 4 };
+  const res = await getMsgApi(data);
+  showSuccessToast(res.user.name);
 };
-const handleErrorReq = () => {
-  getListApiError().then(
-    () => {},
-    err => {
-      console.log(err);
-      showFailToast("请求有误");
-    }
-  );
+const handleErrorReq = async () => {
+  const data = {
+    name: "gm",
+    age: 23
+  };
+  const res = await addApi(data);
+
+  if (res) {
+    showSuccessToast("添加成功");
+  }
 };
 
 const iconOnlineList = [
