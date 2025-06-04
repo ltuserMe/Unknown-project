@@ -24,7 +24,8 @@ export default defineConfig(({ mode }) => {
   // 环境变量
   const env = loadEnv(mode, root, "");
   return {
-    base: env.VITE_PUBLIC_PATH || "/",
+    // base: env.VITE_PUBLIC_PATH || "/",
+    base: "./",
     plugins: [
       vue(),
       vueJsx(),
@@ -87,7 +88,8 @@ export default defineConfig(({ mode }) => {
       // doc: https://github.com/pengzhanbo/vite-plugin-mock-dev-server
       proxy: {
         "^/dev-api": {
-          target: "http://localhost:3001/",
+          // target: "http://localhost:3001/",
+          target: "http://47.120.6.86:5000/",
           rewrite: path => path.replace(new RegExp("^" + "/dev-api"), "")
         }
       }
