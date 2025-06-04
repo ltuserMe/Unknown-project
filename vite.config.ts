@@ -24,8 +24,8 @@ export default defineConfig(({ mode }) => {
   // 环境变量
   const env = loadEnv(mode, root, "");
   return {
-    // base: env.VITE_PUBLIC_PATH || "/",
-    base: "./",
+    base: env.VITE_PUBLIC_PATH || "/",
+    // base: "./",
     plugins: [
       vue(),
       vueJsx(),
