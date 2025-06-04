@@ -20,7 +20,7 @@ const showList: string[] = reactive([]);
 const handleSuccessReq = async () => {
   const data = { id: 4 };
   const res = await getMsgApi(data);
-  showSuccessToast(res.user.name);
+  showSuccessToast("1");
 };
 const handleErrorReq = async () => {
   const data = {
