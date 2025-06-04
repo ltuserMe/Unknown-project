@@ -21,6 +21,13 @@ export const getMsgApi = (params?: object) => {
     params
   });
 };
+export const addApi = (data?: object) => {
+  return http.request({
+    url: "/add",
+    method: "post",
+    data
+  });
+};
 
 export function getListApiError(data?: object): Promise<ListResult> {
   return http.request({
